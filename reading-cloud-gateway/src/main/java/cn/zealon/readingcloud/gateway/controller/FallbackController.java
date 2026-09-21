@@ -13,8 +13,9 @@ public class FallbackController {
 
     @GetMapping("/fallback")
     public Result fallback() {
-        System.out.println("11123");
-        System.out.println("66443");
+        System.out.println("1132232");
+        System.out.println("6644r323");
+        System.out.println("3333333");
         return ResultUtil.fail();
 
     }
