@@ -14,12 +14,13 @@ public class FallbackController {
     @GetMapping("/fallback")
     public Result fallback() {
         System.out.println("111");
-        System.out.println("2222");
+        System.out.println("111");
         System.out.println("33333");
         System.out.println("4444");
         System.out.println("55555");
         System.out.println("66");
         System.out.println("77");
+        System.out.println("88");
         return ResultUtil.fail();
 
     }
