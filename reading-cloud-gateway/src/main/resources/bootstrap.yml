@@ -1,19 +1,84 @@
+server:
+  port: 8010
+
 spring:
   application:
-    # 服务逻辑名称
     name: light-reading-cloud-gateway
 
+  # Nacos 配置中心和注册中心
   cloud:
     nacos:
-      # 配置中心
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yml
         refresh: true
-        shared-dataids: light-reading-cloud-gateway.yml
-        namespace: 4d109a4d-f34d-4e86-9e39-c2d36db24b00
-
-      # 注册中心
+        shared-dataids: reading-cloud-gateway.yml
+        group: DEFAULT_GROUP
       discovery:
         server-addr: 127.0.0.1:8848
-        namespace: 4d109a4d-f34d-4e86-9e39-c2d36db24b00
+        group: DEFAULT_GROUP
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+        - id: book-center-rpc
+          uri: lb://light-reading-cloud-book
+          predicates:
+            - Path=/book/**
+            - Method=GET
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 3
+                redis-rate-limiter.burstCapacity: 5
+                key-resolver: "#{@ipKeyResolver}"
+
+        - id: homepage-rpc
+          uri: lb://light-reading-cloud-homepage
+          predicates:
+            - Path=/index/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 3
+                redis-rate-limiter.burstCapacity: 5
+                key-resolver: "#{@ipKeyResolver}"
+
+        - id: account-center-rpc
+          uri: lb://light-reading-cloud-account
+          predicates:
+            - Path=/account/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 3
+                redis-rate-limiter.burstCapacity: 5
+                key-resolver: "#{@ipKeyResolver}"
+
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    password:
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 20
+      maxQueueSize: 1000
+      queueSizeRejectionThreshold: 400
