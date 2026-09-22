@@ -21,6 +21,7 @@ public class FallbackController {
         System.out.println("66");
         System.out.println("77");
         System.out.println("准");
+        System.out.println("准2");
         return ResultUtil.fail();
 
     }
