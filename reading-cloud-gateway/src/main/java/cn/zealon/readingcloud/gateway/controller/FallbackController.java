@@ -15,13 +15,13 @@ public class FallbackController {
     public Result fallback() {
         System.out.println("111");
         System.out.println("111");
+        System.out.println("11");
         System.out.println("不准");
-        System.out.println("4444");
-        System.out.println("55555");
+        System.out.println("准");
         System.out.println("66");
         System.out.println("77");
-        System.out.println("准");
-        System.out.println("准2");
+        System.out.println("11");
+        System.out.println("22");
         return ResultUtil.fail();
 
     }
