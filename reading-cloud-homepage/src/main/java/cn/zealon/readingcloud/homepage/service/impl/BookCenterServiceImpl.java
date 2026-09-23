@@ -25,9 +25,10 @@ public class BookCenterServiceImpl implements BookCenterService {
 
     @Override
     public Book getBookById(String bookId) {
-        System.out.println("以我为准11");
+        System.out.println("ceshi11");
         String key = RedisBookKey.BookCenter.getFeignClientBookKey(bookId);
-        System.out.println("以我为准22");
+        System.out.println("ceshi22");
+        System.out.println("以我为准33");
         Book book = this.redisService.getCache(key, Book.class);
         if (book != null) {
             return book;
