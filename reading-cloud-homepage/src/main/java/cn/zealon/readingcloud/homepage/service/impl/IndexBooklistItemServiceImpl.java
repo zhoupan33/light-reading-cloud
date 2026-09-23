@@ -7,11 +7,13 @@ import cn.zealon.readingcloud.common.cache.RedisService;
 import cn.zealon.readingcloud.common.constant.CategoryConstant;
 import cn.zealon.readingcloud.common.enums.BookSerialStatusEnum;
 import cn.zealon.readingcloud.common.pojo.book.Book;
+import cn.zealon.readingcloud.common.pojo.index.IndexBannerItem;
 import cn.zealon.readingcloud.common.pojo.index.IndexBooklist;
 import cn.zealon.readingcloud.common.pojo.index.IndexBooklistItem;
 import cn.zealon.readingcloud.common.result.Result;
 import cn.zealon.readingcloud.common.result.ResultUtil;
 import cn.zealon.readingcloud.common.utils.CommonUtil;
+import cn.zealon.readingcloud.homepage.dao.IndexBannerItemMapper;
 import cn.zealon.readingcloud.homepage.dao.IndexBooklistItemMapper;
 import cn.zealon.readingcloud.homepage.service.BookCenterService;
 import cn.zealon.readingcloud.homepage.service.IndexBooklistItemService;
@@ -52,6 +54,9 @@ public class IndexBooklistItemServiceImpl implements IndexBooklistItemService {
     @Autowired
     private LikeSeeClient likeSeeClient;
 
+    @Autowired
+    private IndexBannerItemMapper indexBannerItemMapper;
+
     /**
      * 分页 - 书单更多接口
      * @param booklistId            书单ID
@@ -61,6 +66,8 @@ public class IndexBooklistItemServiceImpl implements IndexBooklistItemService {
      */
     @Override
     public Result getBooklistPagingBooks(Integer booklistId, Integer page, Integer limit) {
+         System.out.println("5555555555");
+        List<IndexBannerItem> list1 = this.indexBannerItemMapper.findPageWithResult(11);
         String key = RedisHomepageKey.getBooklistItemPagingKey(booklistId);
         // 使用页码+数量作为Hash的key，防止不同数量的分页页码冲突
         String field = page.toString() + limit;

@@ -4,6 +4,14 @@ server:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
+#mybatis-plus:
+#  mapper-locations: classpath:mappers/*.xml
+
+logging:
+  level:
+    com: debug
+
+
 spring:
   application:
     name: light-reading-cloud-homepage
@@ -24,7 +32,7 @@ spring:
   datasource:
     book-center:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/reading_cloud_resource?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+      url: jdbc:mysql://localhost:3306/reading_cloud_resource?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
       username: root
       password: '123456'
       initial-size: 5
@@ -66,3 +74,6 @@ hystrix:
       coreSize: 20
       maxQueueSize: 1000
       queueSizeRejectionThreshold: 400
+
+
+
